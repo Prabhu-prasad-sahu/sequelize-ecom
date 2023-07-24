@@ -1,1 +1,1 @@
-# sequelize-ecom-demo
+# sequelize-ecommerce
