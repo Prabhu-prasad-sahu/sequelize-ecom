@@ -33,15 +33,23 @@ const getallCartByUser = async (req, rsp) => {
 
 }
 const removeFromCart = async (req, rsp) => {
+
     let logedInUser = req.user.id
     let paramsID = req.params.id
     let findWhislist = await cart.findAll({ where: { userID: logedInUser } });
+    let findProduct = findWhislist.filter((data) => {
+        return data.productID == paramsID;
+    });
+    if (findProduct[0] == null) {
+        throw new appError("product not in your List", 404)
+    }
     let deleted = findWhislist.filter((data) => {
         return data.productID == paramsID;
     });
     if (!deleted) throw new appError("product not in your cart")
     await cart.destroy({ where: { id: deleted[0].id } })
     rsp.json("product removed from cart")
+
 }
 const totalPrice = async (req, rsp) => {
     let logedInUser = req.user.id
@@ -69,4 +77,5 @@ const totalPrice = async (req, rsp) => {
     // rsp.json("ALL PRODUCT" >> { productName }, "total Bill" >> { totalPrice })
     rsp.json({ productName, totalPrice })
 }
+
 module.exports = { addCart, getallCartByUser, totalPrice, removeFromCart }

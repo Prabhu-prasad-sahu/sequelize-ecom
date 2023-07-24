@@ -30,4 +30,5 @@ router.get("/totalPrice", cookies, async (req, rsp, next) => {
         next(error)
     }
 })
+
 module.exports = router

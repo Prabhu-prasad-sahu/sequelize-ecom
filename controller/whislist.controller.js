@@ -24,9 +24,17 @@ router.get("/getLoginWhisList", cookies, async (req, rsp, next) => {
         next(error)
     }
 })
-router.get("/totalPrice", cookies, async (req, rsp, next) => {
+router.delete("/removeWhisList/:id", cookies, async (req, rsp, next) => {
     try {
-        await whisListService.totalPrice(req, rsp)
+        console.log(">>>");
+        await whisListService.removeWhisList(req, rsp)
+    } catch (error) {
+        next(error)
+    }
+})
+router.post("/whisListToCart", cookies, async (req, rsp, next) => {
+    try {
+        await whisListService.whisListToCart(req, rsp)
     } catch (error) {
         next(error)
     }
