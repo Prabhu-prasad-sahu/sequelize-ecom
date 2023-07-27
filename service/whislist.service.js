@@ -8,6 +8,8 @@ getAllWhislist = async (req, rsp) => {
 
 createWhislist = async (req, rsp) => {
     let logedInUser = req.user
+    let findProduct = await product.findOne({ where: { id: req.params.id } })
+    console.log(findProduct);
     await wishList.create({
         userID: logedInUser.id,
         productID: req.params.id
@@ -49,6 +51,10 @@ const removeWhisList = async (req, rsp) => {
 const whisListToCart = async (req, rsp) => {
     let logedInUser = req.user
     let query = req.query.id
+    let findProduct = await wishList.findOne({ where: { productID: query } })
+    if (!findProduct) {
+        throw new appError("empty WhisList")
+    }
     await wishList.destroy({ where: { productID: query } })
     await cart.create({
         userID: logedInUser.id,

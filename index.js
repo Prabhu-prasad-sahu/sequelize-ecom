@@ -16,12 +16,8 @@ const { auth } = require("express-openid-connect")
 const Port = process.env.PORT || 8000
 
 
-app.use(auth(auth0))
+// app.use(auth(auth0))
 
-app.get('/', (req, res) => {
-    // res.send(req.oidc.isAuthenticated() ? 'Logged in' : 'Logged out');
-    console.log(req.oidc.isAuthenticated());
-});
 app.use(morgan())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
